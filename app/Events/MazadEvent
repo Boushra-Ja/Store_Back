@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Events;
+
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PresenceChannel;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+
+class MazadEvent implements  ShouldBroadcast
+{
+    use Dispatchable, InteractsWithSockets, SerializesModels;
+
+    public $raise_id;
+    public $customer_id;
+    public $number;
+    public $name;
+
+    public function __construct($raise_id,$customer_id,$number,$name)
+    {
+        $this->raise_id=$raise_id;
+        $this->customer_id=$customer_id;
+        $this->number=$number;
+        $this->name=$name;
+//        echo  $number;
+
+    }
+
+
+    public function broadcastOn()
+    {
+        return new Channel('public-channel'.'Mazad');
+    }
+
+    public function  broadcastAs() :String{
+
+        return 'MazadEvent';
+    }
+
+}
